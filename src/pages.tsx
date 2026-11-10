@@ -31,6 +31,129 @@ export function Services(){return <><PageIntro eyebrow="SERVICES" title="Practic
 
 export function Charity(){const [term,setTerm]=useState("");const filtered=useMemo(()=>campaigns.filter(c=>(c.title+" "+c.category+" "+c.location).toLowerCase().includes(term.toLowerCase())),[term]);return <><PageIntro eyebrow="COMMUNITY SUPPORT" title="Helping people connect with causes that matter." text="A developing directory concept for discovering community campaigns and contacting organisers directly."/><section className="section"><div className="container"><Notice><strong>Demonstration mode:</strong> The listings below are examples only, not real campaigns. This website does not receive, hold, or process donations. No bank details are displayed in this demo.</Notice><div className="charity-intro"><div><h2>Direct support. Clear information.</h2><p className="muted">The intended model is for donors to communicate with campaign organisers and, where appropriate, transfer funds directly to the beneficiary or authorised organisation.</p></div><HeartHandshake size={54}/></div><input className="search-input" value={term} onChange={e=>setTerm(e.target.value)} placeholder="Search campaigns by name, category, or location..."/><div className="campaign-grid">{filtered.map(c=><article className="campaign-card" key={c.id}><div className="project-top"><span className="eyebrow">{c.category} · {c.location}</span><span className="status status-demo">{c.status}</span></div><h3>{c.title}</h3><p className="muted">{c.summary}</p><p><strong>Organiser:</strong> {c.organiser}</p><p><strong>Contact:</strong> {c.contactLabel}</p><p className="small-note">{c.paymentNote}</p></article>)}</div><div className="content-narrow"><h2>Important safety guidance</h2><ul className="check-list"><li>Confirm the identity and authority of the organiser independently.</li><li>Never transfer money based only on a website listing or urgent message.</li><li>Bank details should only be published with the account holder's explicit consent.</li><li>Campaigns must be reviewed before being labelled verified.</li><li>Organisers should provide updates and evidence of how support is used.</li></ul><h2>Interested in submitting a campaign?</h2><p className="muted">Campaign submissions are not enabled yet. Contact me first so that the submission, consent, verification, and moderation process can be established safely.</p><a className="btn btn-primary" href="mailto:yididyachernet@gmail.com?subject=Community%20campaign%20enquiry">Contact about a campaign <Mail size={16}/></a></div></div></section></>}
 
-export function Contact(){const [sent,setSent]=useState(false);return <><PageIntro eyebrow="CONTACT" title="Let's connect and explore good ideas." text="For project discussions, collaboration, learning opportunities, or general questions, feel free to reach out."/><section className="section"><div className="container contact-grid"><div><h2>Get in touch</h2><p className="muted">Email is the best way to contact me. You can also connect with me professionally on LinkedIn.</p><a className="contact-line" href="mailto:yididyachernet@gmail.com"><Mail/> yididyachernet@gmail.com <ArrowUpRight/></a><a className="contact-line" href="https://www.linkedin.com/in/yididya-asfaw-7ab974403/" target="_blank" rel="noreferrer"><ExternalLink/> LinkedIn profile <ArrowUpRight/></a></div><form className="contact-form" onSubmit={e=>{e.preventDefault();setSent(true);}}><label>Your name<input required placeholder="Enter your name"/></label><label>Your email<input required type="email" placeholder="you@example.com"/></label><label>Message<textarea required rows={5} placeholder="How can we connect?"/></label><button className="btn btn-primary" type="submit">Prepare email <Send size={15}/></button>{sent&&<p className="success">Your message is ready. Please email me directly at yididyachernet@gmail.com; this demo form does not send or store messages.</p>}</form></div></section></>}
+
+export function Contact() {
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setSent(false);
+    setError("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const body = new URLSearchParams();
+
+    formData.forEach((value, key) => {
+      if (typeof value === "string") {
+        body.append(key, value);
+      }
+    });
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body.toString()
+      });
+
+      if (!response.ok) throw new Error("Submission failed");
+
+      setSent(true);
+      form.reset();
+    } catch {
+      setError("Message could not be sent. Please email yididyachernet@gmail.com directly.");
+    }
+  }
+
+  return (
+    <>
+      <PageIntro
+        eyebrow="CONTACT"
+        title="Let's connect and explore good ideas."
+        text="For project discussions, collaboration, learning opportunities, or general questions, feel free to reach out."
+      />
+
+      <section className="section">
+        <div className="container contact-grid">
+          <div>
+            <h2>Get in touch</h2>
+            <p className="muted">
+              Email is the best way to contact me. You can also connect with
+              me professionally on LinkedIn.
+            </p>
+
+            <a className="contact-line" href="mailto:yididyachernet@gmail.com">
+              <Mail /> yididyachernet@gmail.com <ArrowUpRight />
+            </a>
+
+            <a
+              className="contact-line"
+              href="https://www.linkedin.com/in/yididya-asfaw-7ab974403/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <ExternalLink /> LinkedIn profile <ArrowUpRight />
+            </a>
+          </div>
+
+          <form
+            className="contact-form"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            onSubmit={handleSubmit}
+          >
+            <input type="hidden" name="form-name" value="contact" />
+
+            <p hidden>
+              <label>
+                Don't fill this out:
+                <input name="bot-field" />
+              </label>
+            </p>
+
+            <label>
+              Your name
+              <input name="name" required placeholder="Enter your name" />
+            </label>
+
+            <label>
+              Your email
+              <input name="email" required type="email" placeholder="you@example.com" />
+            </label>
+
+            <label>
+              Subject
+              <input name="subject" required placeholder="What is your message about?" />
+            </label>
+
+            <label>
+              Message
+              <textarea name="message" required rows={5} placeholder="Write your message here..." />
+            </label>
+
+            <button className="btn btn-primary" type="submit">
+              Send message <Send size={15} />
+            </button>
+
+            {sent && (
+              <p className="success">
+                Thank you! Your message has been sent successfully.
+              </p>
+            )}
+
+            {error && <p className="success">{error}</p>}
+          </form>
+        </div>
+      </section>
+    </>
+  );
+}
+
 export function Privacy(){return <><PageIntro eyebrow="POLICIES" title="Privacy notice" text="This starter website is designed to minimize data collection."/><section className="section"><div className="container content-narrow"><h2>Information</h2><p>This initial version does not include user accounts, payment processing, or a database-backed contact form. The contact form only displays a reminder to email directly; it does not transmit or store submitted information.</p><h2>Third-party services</h2><p>When deployed, your hosting provider may collect standard technical logs. External links are governed by their respective providers' privacy policies.</p><h2>Future changes</h2><p>Before enabling accounts, campaign submissions, analytics, or file uploads, this notice must be updated to explain what information is collected, why it is collected, who can access it, and how long it is retained.</p></div></section></>}
 export function Terms(){return <><PageIntro eyebrow="POLICIES" title="Terms of use" text="Basic information about using this website."/><section className="section"><div className="container content-narrow"><h2>Informational content</h2><p>Content is provided for general informational and portfolio purposes. Project descriptions may change as work develops.</p><h2>Charity listings</h2><p>The current charity section contains demonstration content only. This website is not a payment intermediary and does not guarantee campaigns or organisers. Do not send money based on sample listings.</p><h2>Contact</h2><p>For questions, email yididyachernet@gmail.com.</p></div></section></>}
