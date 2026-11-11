@@ -6,11 +6,17 @@ import { Notice, PageIntro, SectionHeading } from "./components/Blocks";
 
 export function Home() {
   return <>
-    <section className="hero"><div className="container hero-grid"><div className="hero-copy"><p className="eyebrow"><span className="pulse"/> COMPUTER SCIENCE • TECHNOLOGY • COMMUNITY</p><h1>Building with technology.<br/><span>Creating meaningful impact.</span></h1><p className="hero-text">I'm Yididya Asfaw, an aspiring computer scientist from Ethiopia. I'm learning, building digital projects, exploring AI, and looking for ways technology can make a difference.</p>
-<p className="faith-note">
-  Above all, all thanks and glory be to God, who has guided me,
-  strengthened me, and helped me through everything.
-</p>
+    <section className="hero"><div className="container hero-grid"><div className="hero-copy"><p className="eyebrow"><span className="pulse"/> COMPUTER SCIENCE • TECHNOLOGY • COMMUNITY</p><h1>Building with technology.<br/><span>Creating meaningful impact.</span></h1><p className="hero-text">I'm Yididya Asfaw, an aspiring computer scientist from Ethiopia. I'm learning, building digital projects, exploring AI, and looking for ways technology can make a difference.</p> <div className="faith-card">
+  <div className="faith-label">✦ ALL GLORY TO GOD</div>
+  <h2>With gratitude to God,</h2>
+  <h3>who made everything possible.</h3>
+  <p>
+    Through every challenge, every opportunity, and every
+    step of this journey, His grace has guided me and
+    His strength has carried me.
+  </p>
+  <strong>SOLI DEO GLORIA — TO GOD ALONE BE THE GLORY.</strong>
+</div>
 <div className="hero-actions"><Link className="btn btn-primary" to="/projects">Explore my work <ArrowRight size={17}/></Link><Link className="btn btn-secondary" to="/contact">Get in touch</Link></div><div className="hero-meta"><span><MapPin size={15}/> Ethiopia</span><span><CodeIcon/> Computer Science</span></div></div><div className="hero-art"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="hero-monogram">Y<span>.</span></div><div className="floating-chip chip-one">{"</>"} Code</div><div className="floating-chip chip-two">AI + Ideas</div><div className="floating-chip chip-three">Build • Learn • Grow</div></div></div></section>
     <section className="section"><div className="container"><SectionHeading eyebrow="WHAT I'M ABOUT" title="A platform for ideas, projects, and progress" text="This is more than a portfolio. It is a growing record of what I learn, what I build, and the impact I hope to create."/><FeatureCardsImport/></div></section>
     <section className="section section-soft"><div className="container split"><div><p className="eyebrow">MY DIRECTION</p><h2>Curiosity into capability.<br/><span className="gradient-text">Ideas into real work.</span></h2></div><div><p className="muted large">My focus is computer science, software development, artificial intelligence, entrepreneurship, education, and community development. I want to grow through practical experience and create technology that is useful and accessible.</p><Link className="text-link" to="/about">More about me <ArrowUpRight size={16}/></Link></div></div></section>
