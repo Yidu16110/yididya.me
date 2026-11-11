@@ -87,7 +87,7 @@ export function Contact() {
             </p>
 
             <a className="contact-line" href="mailto:yididyachernet@gmail.com">
-              <Mail /> yididyachernet@gmail.com <ArrowUpRight />
+              <Mail /> Email me <ArrowUpRight />
             </a>
 
             <a
