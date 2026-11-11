@@ -1,4 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { supabase, backendConfigured } from "./lib/supabase";
 
 const ADMIN_EMAIL = "yididyachernet@gmail.com";
@@ -89,7 +90,7 @@ export default function Admin() {
   );
 
   return <main className="admin-page"><div className="admin-wrap">
-    <header className="admin-header"><div><p className="eyebrow">PRIVATE CONTENT MANAGER</p><h1>Admin dashboard</h1><p className="muted">Signed in as {ADMIN_EMAIL}</p></div><button className="btn btn-secondary" onClick={() => supabase.auth.signOut()}>Sign out</button></header>
+    <header className="admin-header"><div><p className="eyebrow">PRIVATE CONTENT MANAGER</p><h1>Admin dashboard</h1><p className="muted">Signed in as {ADMIN_EMAIL}</p></div><button className="btn btn-secondary" onClick={() => void supabase!.auth.signOut()}>Sign out</button></header>
     <section className="admin-panel"><h2>{editingId ? "Edit content" : "Add content"}</h2><form onSubmit={saveItem} className="admin-form">
       <label>Content category</label><select value={type} onChange={e => setType(e.target.value)}><option value="book">Book</option><option value="project">Project</option><option value="resource">Learning resource</option><option value="article">Blog article</option></select>
       <label>Title</label><input value={title} onChange={e => setTitle(e.target.value)} required maxLength={160} />
