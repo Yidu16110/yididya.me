@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import {
   About, Blog, Charity, Contact, Home, Learning, Privacy,
-  Projects, Services, Technology, Terms
+  Projects, Services, Technology, Terms, LearningTopic
 } from "./pages";
 import { PageIntro } from "./components/Blocks";
 import Admin from "./Admin";
@@ -22,6 +22,7 @@ export default function App() {
         <Route path="technology" element={<Technology />} />
         <Route path="projects" element={<Projects />} />
         <Route path="learning" element={<Learning />} />
+        <Route path="learning/:topic" element={<LearningTopic />} />
         <Route path="blog" element={<Blog />} />
         <Route path="services" element={<Services />} />
         <Route path="charity" element={<Charity />} />
