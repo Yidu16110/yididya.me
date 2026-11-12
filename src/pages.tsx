@@ -112,7 +112,7 @@ export function Contact() {
 
             <a
               className="contact-line"
-              href="https://www.linkedin.com/in/yididya-asfaw-7ab974403/"
+              href="www.linkedin.com/in/yididya-abebe-asfaw-14b825417"
               target="_blank"
               rel="noreferrer"
             >
